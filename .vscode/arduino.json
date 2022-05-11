@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:uno",
+    "programmer": "arduino:avrispmkii",
+    "sketch": "Polarized_Light_Intensity_Measure.ino",
+    "port": "COM6"
+}
