@@ -6,11 +6,10 @@ public:
     {
         SinglePin = 0,
         VccAndGround,
-        VccVcc,
-        VccVccGroundGround
+        VccLeftRightGround
     };
 private:
-    uint8_t V1, V2, G1, G2;
+    uint8_t Vcc, Left, Right, Ground;
     Type type;
 
     void StartFour() const;
@@ -25,9 +24,9 @@ private:
     void StartOne() const;
     void StopOne() const;
 public:
-    Laser(uint8_t v1, uint8_t v2, uint8_t g1, uint8_t g2);
-    Laser(uint8_t v, uint8_t g);
-    Laser(uint8_t v);
+    Laser(uint8_t VccPin, uint8_t LeftPin, uint8_t RightPin, uint8_t GroundPin);
+    Laser(uint8_t LeftPin, uint8_t RightPin);
+    Laser(uint8_t SinglePin);
 
     void Start() const;
     void Stop() const;

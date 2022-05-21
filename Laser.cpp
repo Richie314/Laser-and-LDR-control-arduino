@@ -1,28 +1,22 @@
 #include "Laser.h"
-Laser::Laser(uint8_t v1, uint8_t v2, uint8_t g1, uint8_t g2) : V1(v1), V2(v2), G1(g1), G2(g2) 
+Laser::Laser(uint8_t VccPin, uint8_t LeftPin, uint8_t RightPin, uint8_t GroundPin) : Vcc(VccPin), Ground(GroundPin), Left(LeftPin), Right(RightPin) 
 {
-    pinMode(v1, OUTPUT);
-    pinMode(v2, OUTPUT);
-    if (g1 != 0 && g2 != 0)
-    {
-        pinMode(g1, OUTPUT);
-        pinMode(g2, OUTPUT);
-        this->type = Type::VccVccGroundGround;
-    } else {
-        this->type = Type::VccVcc;
-    }
-    this->Stop();
+    pinMode(VccPin, OUTPUT);
+    pinMode(GroundPin, OUTPUT);
+    pinMode(LeftPin, OUTPUT);
+    pinMode(RightPin, OUTPUT);
+    this->type = Type::VccLeftRightGround;
 };
-Laser::Laser(uint8_t v, uint8_t g) : V1(v), V2(0), G1(g), G2(0) 
+Laser::Laser(uint8_t LeftPin, uint8_t RightPin) : Vcc(0), Ground(0), Left(LeftPin), Right(RightPin) 
 {
-    pinMode(v, OUTPUT);
-    pinMode(g, OUTPUT);
+    pinMode(LeftPin, OUTPUT);
+    pinMode(RightPin, OUTPUT);
     this->type = Type::VccAndGround;
     this->Stop();
 };
-Laser::Laser(uint8_t v) : V1(v), V2(0), G1(0), G2(0) 
+Laser::Laser(uint8_t SinglePin) : Vcc(0), Ground(0), Left(SinglePin), Right(0) 
 {
-    pinMode(v, OUTPUT);
+    pinMode(SinglePin, OUTPUT);
     this->type = Type::SinglePin;
     this->Stop();
 };
@@ -37,10 +31,7 @@ void Laser::Start() const
     case Type::VccAndGround:
         this->StartVccGnd();
         break;
-    case Type::VccVcc:
-        this->StartTwoVcc();
-        break;
-    case Type::VccVccGroundGround:
+    case Type::VccLeftRightGround:
         this->StartFour();
         break;
     }
@@ -55,10 +46,7 @@ void Laser::Stop() const
     case Type::VccAndGround:
         this->StopVccGnd();
         break;
-    case Type::VccVcc:
-        this->StopTwoVcc();
-        break;
-    case Type::VccVccGroundGround:
+    case Type::VccLeftRightGround:
         this->StopFour();
         break;
     }
@@ -70,46 +58,35 @@ Laser::Type Laser::getType() const
 
 void Laser::StartFour() const
 {
-    digitalWrite(this->V1, HIGH);
-    digitalWrite(this->V2, HIGH);
-    digitalWrite(this->G1, LOW);
-    digitalWrite(this->G2, LOW);
+    digitalWrite(this->Vcc, HIGH);
+    digitalWrite(this->Left, LOW);
+    digitalWrite(this->Right, LOW);
+    digitalWrite(this->Ground, LOW);
 }
 void Laser::StopFour() const
 {
-    digitalWrite(this->V1, LOW);
-    digitalWrite(this->V2, LOW);
-    digitalWrite(this->G1, LOW);
-    digitalWrite(this->G2, LOW);
+    digitalWrite(this->Vcc, LOW);
+    digitalWrite(this->Left, LOW);
+    digitalWrite(this->Right, LOW);
+    digitalWrite(this->Ground, LOW);
 }
 
 void Laser::StartVccGnd() const
 {
-    digitalWrite(this->V1, LOW);
-    digitalWrite(this->G1, LOW);
+    digitalWrite(this->Left, LOW);
+    digitalWrite(this->Right, LOW);
 }
 void Laser::StopVccGnd() const
 {
-    digitalWrite(this->V1, HIGH);
-    digitalWrite(this->G1, LOW);
-}
-
-void Laser::StartTwoVcc() const
-{
-    digitalWrite(this->V1, HIGH);
-    digitalWrite(this->V2, HIGH);
-}
-void Laser::StopTwoVcc() const
-{
-    digitalWrite(this->V1, LOW);
-    digitalWrite(this->V2, LOW);
+    digitalWrite(this->Left, HIGH);
+    digitalWrite(this->Right, LOW);
 }
 
 void Laser::StartOne() const
 {
-    digitalWrite(this->V1, HIGH);
+    digitalWrite(this->Left, HIGH);
 }
 void Laser::StopOne() const
 {
-    digitalWrite(this->V1, LOW);
+    digitalWrite(this->Left, LOW);
 }
