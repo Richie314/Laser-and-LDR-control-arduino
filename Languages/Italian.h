@@ -1,4 +1,4 @@
-#define REMINDER "Digita \"LEGGI\", \"CALIBRA\" or \"MULTIPLA\" per iniziare..."
+#define REMINDER "Digita \"LEGGI\", \"CALIBRA\" o \"MULTIPLA\" per iniziare..."
 #define CALIBRATE "Digita \"FINE\" per terminare la calibrazione..."
 
 #define SETUP_COMPLETED "Setup completato."

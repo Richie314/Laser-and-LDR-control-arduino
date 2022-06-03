@@ -154,16 +154,19 @@ void loop()
     Serial.println();
     Serial.println(REMINDER);
   }
-  if (SerialInput.indexOf(CALIBRATE_UPPER) >= 0 || SerialInput.indexOf(CALIBRATE_LOWER) >= 0)
+  if (SerialInput.indexOf(MULTIPLE_UPPER) >= 0 || SerialInput.indexOf(MULTIPLE_LOWER) >= 0)
   {
+    int count = 0;
+    int _res = sscanf(SerialInput.substring(SerialInput.lastIndexOf(" ")).c_str(), " %d", &count);
     ClearVariables();
-    Calibrate();
+    if (_res != EOF)
+      MakeMultipleMeasures(count);
     Serial.println();
     Serial.println();
     Serial.println();
     Serial.println(REMINDER);
   }
-  if (SerialInput.indexOf(MULTIPLE_UPPER) >= 0 || SerialInput.indexOf(MULTIPLE_LOWER) >= 0)
+  if (SerialInput.indexOf(CALIBRATE_UPPER) >= 0 || SerialInput.indexOf(CALIBRATE_LOWER) >= 0)
   {
     ClearVariables();
     Calibrate();
