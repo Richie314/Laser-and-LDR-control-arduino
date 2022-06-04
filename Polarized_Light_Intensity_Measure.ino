@@ -7,7 +7,7 @@ using Volt = double;
 #define LASER_PIN_DIGITAL2 11
 #define SERIAL_BAUD_RATE 9600U
 
-#include "Languages/English.h"
+#include "Languages/Italian.h"
 
 #define MEASURES_PER_ITERATION 20
 #define NUMBER_OF_ITERATIONS 20
@@ -45,14 +45,14 @@ Volt MakeMeasures()
       delay(DELAY_LASER);
       laser.Stop();
       Serial.print("  ->\t ");
-      Serial.println(MediumValues[i], 4);
+      Serial.println(PRINT_NUMBER(MediumValues[i]));
       delay(DELAY_BETWEEN_SETS);
   }
   Volt BestValue = Average<Volt>(MediumValues, 0, NUMBER_OF_ITERATIONS);
   Serial.print(Measure::DrawGraph<Volt>(MediumValues, NUMBER_OF_ITERATIONS));
   Serial.println();
   Serial.print(BEST_VALUE);
-  Serial.println(BestValue, 4);
+  Serial.println(PRINT_NUMBER(BestValue));
   return BestValue;
 }
 void Calibrate()
@@ -87,6 +87,11 @@ void MakeMultipleMeasures(int count)
   if (count <= 0)
     return;
   Volt* Results = (Volt*)malloc(sizeof(Volt) * count);
+  if (!Results)
+  {
+    return;
+  }
+  memset(Results, 0, sizeof(Volt) * count);
   for (int i = 0; i < count; i++)
   {
     Results[i] = MakeMeasures();
@@ -116,10 +121,11 @@ void MakeMultipleMeasures(int count)
   Serial.println(GROUP_RESULT);
   for (int i = 0; i < count; i++)
   {
-    Serial.println(Results[i], 4);
+    Serial.println(PRINT_NUMBER(Results[i]));
   }
   free(Results);
 }
+
 void setup()
 {
   ClearVariables();
@@ -158,9 +164,11 @@ void loop()
   {
     int count = 0;
     int _res = sscanf(SerialInput.substring(SerialInput.lastIndexOf(" ")).c_str(), " %d", &count);
-    ClearVariables();
     if (_res != EOF)
+    {
+      ClearVariables();
       MakeMultipleMeasures(count);
+    }
     Serial.println();
     Serial.println();
     Serial.println();

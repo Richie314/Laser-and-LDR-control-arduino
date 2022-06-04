@@ -27,3 +27,5 @@
 
 #define GO_UPPER "GO"
 #define GO_LOWER "go"
+
+#define PRINT_NUMBER(num) num, 4

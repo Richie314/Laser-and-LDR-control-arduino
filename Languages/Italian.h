@@ -27,3 +27,5 @@
 
 #define GO_UPPER "VAI"
 #define GO_LOWER "vai"
+
+#define PRINT_NUMBER(num) ReplaceInString(String(num, 4), '.', ',')

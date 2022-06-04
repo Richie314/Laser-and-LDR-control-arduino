@@ -26,6 +26,14 @@ template <typename T> inline T Average(const T* arr, size_t start, size_t count)
     }
     return t;
 }
-template <typename T> T Map(T x, T in_min, T in_max, T out_min, T out_max) {
+
+template <typename T> inline T Map(T x, T in_min, T in_max, T out_min, T out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+inline String ReplaceInString(const String& s, char toReplace, char replaceWith)
+{
+  String copy = s;
+  copy.replace(toReplace, replaceWith);
+  return copy;
 }
