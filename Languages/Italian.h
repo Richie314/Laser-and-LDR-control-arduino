@@ -1,3 +1,8 @@
+#pragma once
+//  Languages/Italian.h
+//  Text for compiling and later running the program in Italian, 
+//  a correction to pint the number with a comma instead of a dot is added.
+
 #define REMINDER "Digita \"LEGGI\", \"CALIBRA\" o \"MULTIPLA\" per iniziare..."
 #define CALIBRATE "Digita \"FINE\" per terminare la calibrazione..."
 

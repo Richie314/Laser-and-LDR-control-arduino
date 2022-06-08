@@ -1,3 +1,7 @@
+#pragma once
+//  Languages/English.h
+//  Text for compiling and later running the program in English
+
 #define REMINDER "Type \"READ\", \"CALIBRATE\" or \"MULTIPLE\" to start..."
 #define CALIBRATE "Type \"END\" to stop calibration..."
 

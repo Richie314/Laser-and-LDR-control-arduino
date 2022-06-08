@@ -3,7 +3,7 @@
 #include <Arduino.h>
 namespace Measure
 {
-    
+    //Run a generic function multiple times
     template <typename T> inline T TakeGroup(
         T* InputArray,
         const size_t MeasuresPerBlock, 
@@ -44,7 +44,9 @@ namespace Measure
             free(InputArray);
         }
         return t;
-  }
+    }
+    //Draws a simple histogram, contained in a string, the input array will be sorted to perform the operation, 
+    //The size of the array must be a multiple of 5
     template <typename T> inline String DrawGraph(
         T* Array,
         size_t Size
@@ -63,6 +65,10 @@ namespace Measure
             Average<T>(Array, Size / 5 * 3, Size / 5),
             Average<T>(Array, Size / 5 * 4, Size / 5)
         };
+        if (!Graph)
+        {
+            return "Memory error";
+        }
         if (Graph[4] == Graph[0]) {//horizontal line
             return "Data could not be displayed!";
         }
@@ -116,12 +122,11 @@ namespace Measure
             CharMatrix[7] += " ";
         }
         CharMatrix[6] += ">";
-        String Final;
-        for (int i = 0; i < 8; i++)
+        for (int i = 1; i < 8; i++)
         {
-            Final += CharMatrix[i] + '\n';
+            CharMatrix[0] += '\n' + CharMatrix[i];
             CharMatrix[i] = "";//We relase the space as soon as we can
         }
-        return Final;
+        return CharMatrix[0];
     }
 }
