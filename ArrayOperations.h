@@ -1,5 +1,5 @@
 #pragma once
-//SchellSort is a fast algorithm that doesn't base itself on recursion,
+//ShellSort is a fast algorithm that doesn't base itself on recursion,
 //recursion can cause crashes on the Arduino board by allocating too much memory
 template <typename T> inline void ShellSort(T* arr, size_t since, size_t to,
   bool (*compare)(T a, T b) = [](T a, T b) {return (a > b); },
